@@ -14,35 +14,63 @@ int print_char(va_list arg, int index)
 }
 
 /**
- * print_s - prints string
+ * print_str - prints string
  * @arg: printf arguments
  * @index: number of characters
  * Return: index + strlen
  */
 int print_str(va_list arg, int index)
 {
+	int i;
 	char *print_s = va_arg(arg, char*);
-	int str_len = strlen(print_s);
+	char c;
 
-	write(1, print_s, str_len);
-	return (index + str_len);
+	for (i = 0; (c = print_s[i]) != '\0'; i++)
+	{
+		write(1, &c, 1);
+		index++;
+	}
+	return (index);
 }
 
 /**
- * printf_int - print integer
+ * print_int - print integer
  * @arg: printf arguments
- * return: number of charcters printed
+ * @index: number of characters
+ * Return: number of integers printed
  */
-int print_int(va_list args)
+int print_int(va_list arg, int index)
 {
-	int n = va_arg(args, int :)
-	int num, last = n % 10, digit, exp = 1;
-	int i = 1;
+	int n = va_arg(arg, int);
+	int temp, num_len, i;
+	char buffer[12];
 
-	n = n / 10;
-	num = n;
+	if (n < 0)
+	{
+		write(1, "-", 1);
+		index++;
+		n = -n;
+	}
+	temp = n;
+	num_len = 0;
 
-write(last + '0');
-	return (i);
+	if (temp == 0)
+		num_len = 1;
+	else
+	{
+		while (temp != 0)
+		{
+			temp /= 10;
+			num_len++;
+		}
+	}
+	for (i = num_len - 1; n > 0; i--)
+	{
+		buffer[i] = '0' + n % 10;
+		n /= 10;
+	}
+	write(1, buffer, num_len);
+	index += num_len;
+
+	return (index);
 }
-
