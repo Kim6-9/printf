@@ -3,7 +3,7 @@
  * print_char - prints char
  * @arg: printf arguments
  * @index: number of characters
- * Return: index++
+ * Return: index+1
  */
 int print_char(va_list arg, int index)
 {
