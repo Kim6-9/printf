@@ -3,7 +3,7 @@
  * _printf - printf replica
  * @format: format of printf
  * Return: index
-*/
+ */
 int _printf(const char *format, ...)
 {
 	int index = 0;
@@ -37,6 +37,8 @@ int _printf(const char *format, ...)
 			{
 				index = print_str(arg, index);
 			}
+			else if (*format == 'i')
+				index = print_int(arg, index);
 		}
 	}
 	va_end(arg);
