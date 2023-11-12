@@ -37,7 +37,7 @@ int _printf(const char *format, ...)
 			{
 				index = print_str(arg, index);
 			}
-			else if (*format == 'i')
+			else if (*format == 'i' || *format == 'd')
 				index = print_int(arg, index);
 		}
 	}
