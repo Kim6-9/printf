@@ -33,9 +33,9 @@ int print_str(va_list arg, int index)
  * @arg: printf arguments
  * return: number of charcters printed
  */
-int print_int(va_list arg, int index)
+int print_int(va_list args)
 {
-	int n = va_arg(arg, int :)
+	int n = va_arg(args, int :)
 	int num, last = n % 10, digit, exp = 1;
 	int i = 1;
 
