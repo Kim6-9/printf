@@ -1,46 +1,44 @@
 #include "main.h"
 /**
  * _printf - printf replica
- * @format: format of printf
- * Return: index
+ * @format: format identifier
+ * Return: the printed string's length
  */
-int _printf(const char *format, ...)
+int _printf(const char * const format, ...)
 {
-	int index = 0;
-	va_list arg;
+	f_match m[] = {
+		{"%s", print_str}, {"%c", print_char},
+		{"%%", print_37},
+		{"%i", print_int}, {"%d", print_dec}, {"%r", print_rev},
+		{"%R", print_rot13}, {"%b", print_binary}, {"%u", print_unsint},
+		{"%o", print_octa}, {"%x", print_hexa}, {"%X", print_uHEXA},
+		{"%S", print_string}, {"%p", print_ptr}
+	};
 
-	if (format == NULL)
+	va_list args;
+	int i, j, len = 0;
+
+	va_start(args, format);
+	if (format == NULL || (format[0] == '%' && format[1] == '\0'))
 		return (-1);
 
-	va_start(arg, format);
-	for (; *format; format++)
+	for (i = 0; format[i] != '\0'; i++)
 	{
-		if (*format != '%')
+		for (j = 13; j >= 0; j--)
 		{
-			write(1, format, 1);
-			index++;
-		}
-		else
-		{
-			format++;
-			if (*format == '\0')
+			if (m[j].x[0] == format[i] && m[j].x[1] == format[i + 1])
+			{
+				len += m[j].fun(args);
+				i = i + 1;
 				break;
-
-			else if (*format == '%')
-				write(1, format, 1);
-
-			else if (*format == 'c')
-			{
-				index = print_char(arg, index);
 			}
-			else if (*format == 's')
-			{
-				index = print_str(arg, index);
-			}
-			else if (*format == 'i' || *format == 'd')
-				index = print_int(arg, index);
+		}
+		if (j < 0)
+		{
+			_putchar(format[i]);
+			len++;
 		}
 	}
-	va_end(arg);
-	return (index);
+	va_end(args);
+	return (len);
 }
